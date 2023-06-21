@@ -12,7 +12,6 @@ usp.on("connection",async(socket)=>{
     await user.findByIdAndUpdate({_id:user_id},{$set:{is_online:'1'}});
     socket.broadcast.emit("getonline",{user:user_id});
     socket.on("disconnect",async()=>{
-        console.log("disconnect")
         var user_id=socket.handshake.auth.token;
         await user.findByIdAndUpdate({_id:user_id},{$set:{is_online:'0'}});
         socket.broadcast.emit("getofline",{user:user_id})

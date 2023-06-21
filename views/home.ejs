@@ -115,7 +115,6 @@
                 my_p.innerText=data.data.message;
                 my_u.appendChild(my_p);
                 cgat_mess=data.data.message;
-                console.log(cgat_mess)
                 // my_u.append(`<div class="right-user">
                 //   <p>`+data.message+`</p>
                 //   </div>`);
@@ -134,7 +133,6 @@
         e.addEventListener("click",()=>{
           var i=e.getAttribute("data-id");
           reciever_id=i;
-          console.log(i);
           socket.emit("existchat",{sender_id:sender_id,reciever_id:reciever_id});
           message_box.classList.toggle("show-box");
         })
