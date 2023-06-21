@@ -145,6 +145,7 @@ html{
   width: 80%;
   height: auto;
   background-color: whitesmoke;
+  display: none;
 }
 .messagebox {
   width: 100%;

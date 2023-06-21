@@ -63,7 +63,7 @@
           <div class="messagebox"id="user_da">
 
           </div>
-          <form action=""id="form_box"method="POST">
+          <form action=""id="form_box">
             <input type="text" placeholder="Write Message..."id="inp_val" required/>
             <button>Send<i class="bx bx-send"></i></button>
           </form>
@@ -79,10 +79,6 @@
       var user_pho='<%=user.user_photo%>'
       var reciever_id;
       var list_item=document.getElementById("list-item");
-      var dot_menu=document.getElementById("dot_menu");
-      dot_menu.addEventListener("click",()=>{
-        list_item.classList.toggle("show_hide")
-      });
       const socket=io("/enjoy-chat",{
         auth:{
           token:sender_id
@@ -100,8 +96,6 @@
       form_box.addEventListener("submit",(e)=>{
         var message=document.getElementById("inp_val").value;
          e.preventDefault();
-         alert(message)
-
          $.ajax({
             url:"/save-userchat",
             type:"POST",
@@ -119,7 +113,6 @@
                 //   <p>`+data.message+`</p>
                 //   </div>`);
                   socket.emit("chtsend",data.data);
-                  console.log(data.data)
                }
             }
           })
@@ -132,6 +125,7 @@
       userr_box.forEach(function(e){
         e.addEventListener("click",()=>{
           var i=e.getAttribute("data-id");
+          console.log(i)
           reciever_id=i;
           socket.emit("existchat",{sender_id:sender_id,reciever_id:reciever_id});
           message_box.classList.toggle("show-box");
@@ -158,7 +152,6 @@
                 my_p.setAttribute("class","right-user");
                 my_p.innerText=data.message;
                 my_u.appendChild(my_p);
-                console.log(data.reciever_id+data.sender_id)
          }
     
       });
