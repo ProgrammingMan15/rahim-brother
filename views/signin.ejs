@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- favicon -->
+     <link rel="shortcut icon" href="https://i.ibb.co/SNh3ryG/Creative-Chatting-App-Logo-1.png" type="image/x-icon">
+     <!-- css link -->
+     <link rel="stylesheet" href="/styles/main.css">
+     <link rel="stylesheet" href="/styles/signup.css">
+     <!-- icon link -->
+     <link rel="stylesheet"
+     href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <title>Sign-In</title>
+</head>
+<body>
+    <div class="signup">
+        <div class="sigupmain">
+            <div class="text-signup">
+                <h1>Log In</h1>
+            </div>
+            <form action="/signin"method="POST">
+                <div class="boxinp">
+                    <input type="text"name="name"placeholder="Enter Your Name"required autocomplete="off">
+                </div>
+                <div class="boxinp">
+                    <input type="email"name="email"placeholder="Enter Your Email"required autocomplete="off">
+                </div>
+                <!-- <div class="boxinp pass-box">
+                    <input type="password"id="password"name="password"placeholder="Enter Your Password"required><br>
+                    <i class='bx bx-show'id="changeicon"></i>
+                </div> -->
+                <button>Submit</button>
+                <div class="account-text">
+                    <p>Create an account? <a href="/signup">Sign up</a></p>
+                </div>
+            </form>
+            <div class="sign-text">
+                <%if(typeof message!== "undefined"){%>
+                    <p><%=message%></p>  
+               <%}%>
+            </div>
+        </div>
+    </div>
+
+    <!-- javascript code -->
+    <script>
+        let changeicon=document.getElementById("changeicon");
+        let password=document.getElementById("password");
+        changeicon.addEventListener("click",()=>{
+            if(password.type =="password"){
+                password.type ="text"
+                changeicon.setAttribute("class","bx bx-hide")
+            }
+            else{
+                password.type = "password"
+                changeicon.setAttribute("class","bx bx-show")
+            }
+        })
+    </script>
+</body>
+</html>

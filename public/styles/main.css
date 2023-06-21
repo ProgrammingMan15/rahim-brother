@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Space Grotesk", sans-serif;
+}
+html{
+  overflow-x: hidden;
+}
+:root {
+  --theme-bg: #010313;
+}
+.container {
+  width: 100%;
+  display: flex;
+}
+.userlist {
+  width: 30%;
+  height: 100vh;
+  overflow: auto;
+  box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
+  background-color: white;
+}
+.chatapp {
+  width: 100%;
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.chatapp img {
+  width: 60px;
+  height: 60px;
+}
+.chatapp p {
+  font-size: 25px;
+}
+.userbox-main {
+  width: 100%;
+  height: auto;
+}
+.userbox {
+  display: flex;
+  padding: 15px 10px;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+  margin: 0px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+}
+.userbox img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.userbox p {
+  font-size: 22px;
+  color: #697a8d;
+}
+.userbox .online{
+  position: absolute;
+  top: 20%;
+  font-size: 15px;
+  right: 20%;
+  padding: 5px;
+  background-color: #00a8ff;
+  color: white;
+  border-radius: 5px;
+}
+.userbox:hover {
+  background-color: #696cff;
+  color: #696cff;
+}
+.userbox:hover p {
+  color: white;
+}
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #696cff;
+  border-radius: 5px;
+}
+.messaginglist {
+  width: 70%;
+  height: 100vh;
+  padding: 50px;
+}
+.messagintext{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+}
+.menu-box{
+  cursor: pointer;
+}
+/* .list-item{
+  position: absolute;
+  bottom: -130px;
+  left: -40px;
+  width: 100px;
+  height:auto;
+  border-radius: 5px;
+  background-color: whitesmoke;
+  display: none;
+} */
+/* .list-item ul li{
+  list-style: none;
+  padding: 10px;
+  text-align: center;
+}
+.list-item ul li:hover{
+  background-color: #696cff;
+} */
+/* .list-item ul li:hover a{
+  color: white;
+} */
+/* .show_hide{
+  display: block;
+} */
+.list-item a{
+  text-decoration: none;
+  color: black;
+}
+.menu-box img{
+  width: 25px;
+  height: 25px;
+}
+.messagintext h3 {
+  font-size: 22px;
+}
+.mainmessage-box {
+  border-radius: 10px;
+  width: 80%;
+  height: auto;
+  background-color: whitesmoke;
+}
+.messagebox {
+  width: 100%;
+  height: 400px;
+  overflow: auto;
+}
+.mainmessage-box form {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.mainmessage-box form input {
+  width: 75%;
+  height: 55px;
+  border: none;
+  letter-spacing: 1;
+  font-size: 17px;
+  outline: none;
+  font-weight: 400;
+  padding: 15px;
+  border-radius: 5px;
+}
+.mainmessage-box form button {
+  width: 20%;
+  height: 55px;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+  background-color: #696cff;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transform: 0.3s;
+}
+.mainmessage-box form button:hover{
+    background-color:#4452E0 ;
+}
+.left-user{
+  text-align: left;
+  display: flex;
+  gap: 20px;
+  justify-content: start;
+  align-items: center;
+  padding: 20px;
+  font-size: 20px;
+}
+.left-user img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.right-user{
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  justify-content: end;
+  align-items: center;
+  padding: 20px;
+  text-align: right;
+  font-size: 20px;
+}
+.right-user img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.show-box{
+  display: block;
+}
+
+@media(max-width:768px){
+  .container{
+    width: 100%;
+    flex-direction: column;
+    height: 100vh;
+  }
+  .userlist{
+    width: 100%;
+    height: 33vh;
+  }
+  .messaginglist{
+    width: 100%;
+    padding: 20px;
+    height: 60vh;
+  }
+  .mainmessage-box{
+    width: 100%;
+  }
+  .mainmessage-box form input{
+    width: 65%;
+    font-size: 16px;
+
+  }
+  .mainmessage-box form button{
+    width: 35%;
+    font-size: 16px;
+  }
+  .messagebox{
+    height: 40vh;
+  }
+  .messagintext h3{
+    font-size: 15px;
+  }
+}

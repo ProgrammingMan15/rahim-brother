@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- favicon -->
+    <link
+      rel="shortcut icon"
+      href="https://i.ibb.co/SNh3ryG/Creative-Chatting-App-Logo-1.png"
+      type="image/x-icon"
+    />
+    <!-- css link -->
+    <link rel="stylesheet" href="/styles/main.css" />
+    <!-- icon link -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="userlist">
+        <div class="chatapp">
+          <img
+            src="https://i.ibb.co/dpwmgNd/output-onlinepngtools-1.png"
+            alt="logo"
+          />
+          <p>Chat Appv</p>
+        </div>
+        <div class="userbox-main">
+          <%data.forEach((e)=>{%>
+          <div class="userbox"data-id="<%=e._id%>">
+            <img src="/userimage/<%=e.user_photo%>" alt="userimage" />
+            <p><%=e.name%></p>
+            <%
+             if(e.is_online==1){
+              %>
+               <p class="online online-status"id="<%=e._id%>">Online</p>
+ 
+              <%
+             }
+             else{
+              %>
+              <p class="online offline-status"id="<%=e._id%>">Ofline</p>
+
+             <%
+             }
+
+            %>
+          </div>
+          <%})%>
+        </div>
+      </div>
+      <div class="messaginglist">
+        <div class="messagintext">
+          <h3>Chat With Your Friend And Make Fun!</h3>
+          <div class="menu-box">
+       <a href="/dashboard/logout">Log Out</a>
+          </div>
+        </div>
+        <div class="mainmessage-box"id="message-box">
+          <div class="messagebox"id="user_da">
+
+          </div>
+          <form action=""id="form_box"method="POST">
+            <input type="text" placeholder="Write Message..."id="inp_val" required/>
+            <button>Send<i class="bx bx-send"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- javascript code -->
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      var sender_id='<%=user._id%>' ;
+      var user_pho='<%=user.user_photo%>'
+      var reciever_id;
+      var list_item=document.getElementById("list-item");
+      var dot_menu=document.getElementById("dot_menu");
+      dot_menu.addEventListener("click",()=>{
+        list_item.classList.toggle("show_hide")
+      });
+      const socket=io("/enjoy-chat",{
+        auth:{
+          token:sender_id
+        }
+      });
+      socket.on("getonline",function(data){
+        document.getElementById(data.user).innerHTML="Online"
+      });
+      socket.on("getofline",function(data){
+       document.getElementById(data.user).innerHTML="Ofline"
+
+      });
+      var message_box=document.getElementById("message-box");
+      var form_box=document.getElementById("form_box");
+      form_box.addEventListener("submit",(e)=>{
+        var message=document.getElementById("inp_val").value;
+         e.preventDefault();
+         alert(message)
+
+         $.ajax({
+            url:"/save-userchat",
+            type:"POST",
+            data:{sender_id:sender_id, reciever_id: reciever_id,message:message},
+            success:function(data){
+               if(data.success){
+                document.getElementById("inp_val").value="";
+                var my_u=document.getElementById('user_da');
+                var my_p=document.createElement("p");
+                my_p.setAttribute("class","left-user");
+                my_p.innerText=data.data.message;
+                my_u.appendChild(my_p);
+                cgat_mess=data.data.message;
+                console.log(cgat_mess)
+                // my_u.append(`<div class="right-user">
+                //   <p>`+data.message+`</p>
+                //   </div>`);
+                  socket.emit("chtsend",data.data);
+                  console.log(data.data)
+               }
+            }
+          })
+      })
+      // userr_box.addEventListener("click",()=>{
+      //     var i=
+      //   message_box.classList.toggle("show-box")
+      // })
+      var userr_box=document.querySelectorAll(".userbox");
+      userr_box.forEach(function(e){
+        e.addEventListener("click",()=>{
+          var i=e.getAttribute("data-id");
+          reciever_id=i;
+          console.log(i);
+          socket.emit("existchat",{sender_id:sender_id,reciever_id:reciever_id});
+          message_box.classList.toggle("show-box");
+        })
+      });
+      // userr_box.forEach((item)=>{
+      //   item.addEventListener("click",()=>{
+      //     for(var i=0;i<userr_box.length;i++){
+      //       if(userr_box[i] !=item){
+      //         message_box.classList.remove("show-box");
+      //       }else{
+      //         message_box.classList.toggle("show-box");
+      //       }
+      //       var i=item.getAttribute("data-id");
+      //       reciever_id=i;
+      //       socket.emit("existchat",{sender_id:sender_id,reciever_id:reciever_id});
+      //     }
+      //   })
+      // })
+      socket.on("loadchat",function(data){
+         if(sender_id==data.sender_id && reciever_id==data.reciever_id){
+          var my_u=document.getElementById('user_da');
+                var my_p=document.createElement("p");
+                my_p.setAttribute("class","right-user");
+                my_p.innerText=data.message;
+                my_u.appendChild(my_p);
+                console.log(data.reciever_id+data.sender_id)
+         }
+    
+      });
+      socket.on("loadchats",function(data){
+           var chat_load=data.chats;
+           var my_u=document.getElementById('user_da');
+           var user_d=document.getElementById("user_da");
+           var addclass="";
+           user_d.innerHTML="";
+           chat_load.forEach((e)=>{
+            if(e.sender_id ==sender_id){
+              addclass="left-user"
+             }else{
+              addclass="right-user"
+             }
+             var my_p=document.createElement("p");
+             my_p.setAttribute("class",addclass);
+             my_p.innerHTML+=e.message+"<br>";
+             my_u.appendChild(my_p)
+             bottomscrooll()
+           });
+           
+      });
+      function bottomscrooll(){
+          var messagebox=document.querySelector(".messagebox");
+          messagebox.scrollTop=messagebox.scrollHeight
+      }
+    </script>
+  </body>
+</html>
